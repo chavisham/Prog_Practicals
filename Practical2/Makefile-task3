@@ -1,0 +1,17 @@
+
+CC = gcc
+
+DEPS = reader.h
+CFLAGS=-I.
+
+all: main.o reader.o
+	echo "link building $a from $^"
+	$(CC) -o $@ $^
+
+%.o: %.c $(DEPS)
+	echo "compile $< -> $@"
+	$(CC) -c -o $@ $< $(CFLAGS)
+
+clean:
+	echo "clean removing objects, .d files and the executable"
+	rm -rf program reader.o

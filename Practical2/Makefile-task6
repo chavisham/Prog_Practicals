@@ -1,0 +1,43 @@
+CC     = gcc
+CFLAGS = -Wall -Wextra -O2 -I$(INCDIR)
+SRCDIR = src
+INCDIR = include
+OBJDIR = obj
+BINDIR = bin
+
+.PHONY: all clean debug run-status run-config run-tester help
+
+all: $(BINDIR)/status $(BINDIR)/config $(BINDIR)/tester
+
+$(BINDIR)/status: $(OBJDIR)/status.o $(OBJDIR)/common.o | $(BINDIR)
+	$(CC) -o $@ $^
+
+$(BINDIR)/config: $(OBJDIR)/config.o $(OBJDIR)/common.o | $(BINDIR)
+	$(CC) -o $@ $^
+
+$(BINDIR)/tester: $(OBJDIR)/tester.o $(OBJDIR)/common.o | $(BINDIR)
+	$(CC) -o $@ $^
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.c $(INCDIR)/common.h | $(OBJDIR)
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+$(OBJDIR) $(BINDIR):
+	mkdir -p $@
+
+debug: clean
+	$(MAKE) -f Makefile-task6 all CFLAGS="-Wall -Wextra -g -O0 -I$(INCDIR)"
+
+run-status: $(BINDIR)/status
+	./$<
+
+run-config: $(BINDIR)/config
+	./$<
+
+run-tester: $(BINDIR)/tester
+	./$<
+
+clean:
+	rm -rf $(OBJDIR) $(BINDIR)
+
+help:
+	echo "Targets: all, debug, run-status, run-config, run-tester, clean, help"

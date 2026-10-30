@@ -1,0 +1,1 @@
+tr 'A-Z' 'a-z' <legacy_inventory.dat | tr '\t' ',' | tr '!@$%#*' '123456'
