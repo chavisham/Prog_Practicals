@@ -1,17 +1,22 @@
+CC     = gcc
+CFLAGS = -I. -MMD -MP
+OBJS   = main.o reader.o
+TARGET = program
 
-CC = gcc
+.PHONY: all clean
 
-DEPS = reader.h
-CFLAGS=-I.
+all: $(TARGET)
 
-all: main.o reader.o
-	echo "link building $a from $^"
+$(TARGET): $(OBJS)
+	echo "link building $@ from $^"
 	$(CC) -o $@ $^
 
-%.o: %.c $(DEPS)
+%.o: %.c
 	echo "compile $< -> $@"
-	$(CC) -c -o $@ $< $(CFLAGS)
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+-include $(OBJS:.o=.d)
 
 clean:
 	echo "clean removing objects, .d files and the executable"
-	rm -rf program reader.o
+	rm -f $(OBJS) $(OBJS:.o=.d) $(TARGET)

@@ -21,12 +21,12 @@
 
 # Source the bash profile (required to use the module command)
 source /etc/profile
-
+module load gcc
 
 
 # Run your program (replace this with your program)
 make -f Makefile-task6 clean
-make -f Makefile-task6 all
+make -j2 -f Makefile-task6 all
 ./bin/status
 ./bin/config
 ./bin/tester
