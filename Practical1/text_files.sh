@@ -1,18 +1,20 @@
 #!/bin/bash
 
-if [ "$1" == "1" ]
-then
-    mkdir -p MyTextFiles
-    cp *.[tT][xX][tT] MyTextFiles
-else
-    if [ -d MyTextFiles ];
-    then
-        mv MyTextFiles/*.[tT][xX][tT] .
-    else
-        echo "Warning: MyTextFiles does not exist"
-    fi
-
+if [ ! -d MyTextFiles ]; then
+    existed=false
+    mkdir MyTextFiles
 fi
 
-ls -l > DirectoryListing.txt
+if [ "$1" == "1" ]; then
+
+    cp *.[tT][xX][tT] MyTextFiles/
+else
+    if [ "$existed" == "false" ]; then
+        echo "Warning: MyTextFiles does not exist"
+    else
+        mv MyTextFiles/*.[tT][xX][tT] .
+    fi
+fi
+
+ls MyTextFiles > DirectoryListing.txt
 wc -l < DirectoryListing.txt

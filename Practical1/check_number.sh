@@ -1,6 +1,6 @@
 #!/bin/bash
-read input
-if [ "$input" -gt 10 ]
+number=$1
+if [ "$number" -gt 10 ]; 
 then
     echo "This number is bigger than 10"
 else

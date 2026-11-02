@@ -1,1 +1,1 @@
-tr '\n' ' ' < 1342.txt.utf-8.txt | tr -dc '[:print:]' | tr -dc '[:alpha:] ' | tr ' ' '\n' | tr 'A-Z' 'a-z' | sort | uniq > dictionary.txt
+tr '\n' ' ' < 1342.txt.utf-8.txt | tr -cd '[:print:]' | tr -d '0-9_";{}[]()!:#$%@^&-' | tr ' ' '\n' | tr 'A-Z' 'a-z' | sort | uniq > dictionary.txt
