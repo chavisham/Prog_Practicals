@@ -22,11 +22,11 @@ while read -r priority issue rest; do
     fi
 done < <(tr ',' ' ' < "$file")
 
-common_issue=$(tail -n +2 "$file" | cut -d',' -f2 | sort | uniq -c | sort -rn | head -n 1 | tr -d '0-9 ')
+read -r _ most_common < <(cut -d',' -f5 "$file" | tail -n +2 | sort | uniq -c | sort -rn | head -n 1)
 
 echo "CRITICAL: $critical" > error_analysis.txt
 echo "WARNING: $warning" >> error_analysis.txt
 echo "INFO: $info" >> error_analysis.txt
-echo "MOST_COMMON_ISSUE: $common_issue" >> error_analysis.txt
+echo "MOST_COMMON_ISSUE: $most_common" >> error_analysis.txt
 echo "TOTAL_ENTRIES: $total" >> error_analysis.txt
 echo "ANALYSIS_DATE: $(date '+%Y-%m-%d')" >> error_analysis.txt
